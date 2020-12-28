@@ -148,9 +148,15 @@ public class CadastrarAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
-        int cadastrarUsuario = JOptionPane.showConfirmDialog
-            (null, "Você tem certeza que não quer Salvar"
-            + " o usuário?");              
+          int cadastrarUsuario = JOptionPane.showConfirmDialog               
+        (null, "Você tem certeza que não quer Salvar"
+            + " o usuário?");
+         System.out.println(cadastrarUsuario);
+         if(cadastrarUsuario == 0) {
+            this.dispose();
+            Main abrirMain = new Main();
+            abrirMain.setVisible(true);
+         }else {}           
         
     }//GEN-LAST:event_jbFecharActionPerformed
 

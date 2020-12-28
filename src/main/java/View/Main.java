@@ -34,7 +34,7 @@ public class Main extends javax.swing.JFrame {
         fotoLogin = new javax.swing.JLabel();
         jlbSenha = new javax.swing.JLabel();
         jlb_email = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jbCadastrarProfessor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,6 +49,11 @@ public class Main extends javax.swing.JFrame {
 
         jbCadastrar.setBackground(new java.awt.Color(0, 0, 255));
         jbCadastrar.setText("Cadastrar Aluno");
+        jbCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCadastrarActionPerformed(evt);
+            }
+        });
 
         fotoLogin.setIcon(new javax.swing.ImageIcon("C:\\Users\\lukra\\Documents\\NetBeansProjects\\ProjetoProgramacao\\src\\main\\java\\Assets\\imagemLogin.png")); // NOI18N
 
@@ -56,11 +61,11 @@ public class Main extends javax.swing.JFrame {
 
         jlb_email.setText(" Email");
 
-        jButton2.setBackground(new java.awt.Color(0, 0, 204));
-        jButton2.setText("Cadastrar Professor");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jbCadastrarProfessor.setBackground(new java.awt.Color(0, 0, 204));
+        jbCadastrarProfessor.setText("Cadastrar Professor");
+        jbCadastrarProfessor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jbCadastrarProfessorActionPerformed(evt);
             }
         });
 
@@ -85,10 +90,10 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jpfSenha, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jbLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(73, 73, 73)
-                                .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)
+                                .addComponent(jbCadastrarProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(19, 19, 19))))
         );
         layout.setVerticalGroup(
@@ -108,7 +113,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbCadastrarProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
@@ -119,9 +124,21 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jpfSenhaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jbCadastrarProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarProfessorActionPerformed
+        CadastrarProfessor cadastrarProfessor = new CadastrarProfessor();
+        
+        cadastrarProfessor.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_jbCadastrarProfessorActionPerformed
+
+    private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
+        CadastrarAluno cadastrarAluno = new CadastrarAluno();
+        
+        cadastrarAluno.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_jbCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,8 +177,8 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel fotoLogin;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jbCadastrar;
+    private javax.swing.JButton jbCadastrarProfessor;
     private javax.swing.JButton jbLogar;
     private javax.swing.JLabel jlbSenha;
     private javax.swing.JLabel jlb_email;

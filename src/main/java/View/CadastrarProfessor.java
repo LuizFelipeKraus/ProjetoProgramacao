@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  * @author lukra
  */
 public class CadastrarProfessor extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form CadastrarProfessor
      */
@@ -263,17 +263,19 @@ public class CadastrarProfessor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
-        int cadastrarUsuario = JOptionPane.showConfirmDialog
-        (null, "Você tem certeza que não quer Salvar"
-            + " o usuário?");
-
+       
     }//GEN-LAST:event_jbFecharActionPerformed
 
     private void jbFecharProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharProfessorActionPerformed
-         int cadastrarUsuario = JOptionPane.showConfirmDialog
+         int cadastrarUsuario = JOptionPane.showConfirmDialog               
         (null, "Você tem certeza que não quer Salvar"
             + " o usuário?");
-
+         System.out.println(cadastrarUsuario);
+         if(cadastrarUsuario == 0) {
+            this.dispose();
+            Main abrirMain = new Main();
+            abrirMain.setVisible(true);
+         }else {}
     }//GEN-LAST:event_jbFecharProfessorActionPerformed
 
     /**
