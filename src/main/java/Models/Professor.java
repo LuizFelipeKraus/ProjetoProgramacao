@@ -1,39 +1,39 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Models;
 
-import Controller.DBController;
+import DAO.DBController;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author lukra
- */
-public class Professor extends Pessoa{
-    private String codigo;      
 
-    public String getCodigo() {
-        return codigo;
+public class Professor extends Pessoa{
+    private String formacao;
+    private String Senha;    
+
+    public String getSenha() {
+        return Senha;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setSenha(String Senha) {
+        this.Senha = Senha;
+    }
+
+    public String getFormacao() {
+        return formacao;
+    }
+
+    public void setFormacao(String formacao) {
+        this.formacao = formacao;
     }
     
-    public void adicionarUsuario() throws Exception {
+     public void adicionarProfessor() throws Exception {
         DBController db = new DBController();
         Map<String,String> dados = new HashMap<>();
         
         dados.put("nome", getNome());
-        dados.put("codigo", this.codigo );
+        dados.put("formacao", getFormacao());
         dados.put("email", getEmail());
         dados.put("senha", getSenha());
         dados.put("imagem", getImagem());
@@ -41,50 +41,57 @@ public class Professor extends Pessoa{
         db.conectar();
         db.insert("professor", dados);
         db.desconectar();
-    }
-        
-    public void atualizarUsuario() throws Exception {
-        DBController db = new DBController();
-        Map<String,String> dados = new HashMap<>();
-        Map<String,String> where = new HashMap<>();
-        
-        dados.put("nome", getNome());
-        dados.put("codigo", this.codigo );
-        dados.put("email", getEmail());
-        dados.put("senha", getSenha());
-        dados.put("imagem", getImagem());
-        where.put("id", String.valueOf(getId()));
-        
-        db.conectar();
-        db.update("professor", dados, where);
+    }   
+     
+    public boolean login(String email, String senha) throws Exception {
+        DBController db = new DBController();        
+        db.conectar();         
+        boolean check = false;
+        ResultSet rset;
+        rset = db.executeQuery("SELECT * FROM professor WHERE email = "+ "'"+email+ "'" +" and "
+                    + "senha = "+"'"+senha+"'");
+             
+        try {             
+            if(rset.next()) {              
+                check =  true; 
+            }
+        }catch (SQLException ex) {
+            throw new Exception("Erro ao percorrer resultados!");
+            
+        }           
         db.desconectar();
+        
+        return check;
     }
     
-     public static List<Professor> buscaProdutos() throws Exception {
+    public static Professor buscaProfessor(String email, String senha) throws Exception {
         DBController db = new DBController();
         ResultSet rset;
-        List<Professor> professor = new ArrayList<>();
-                
+        Professor professor = new Professor();
+        Professor p = new Professor();       
         db.conectar();
-        rset = db.executeQuery("SELECT * FROM professor");
+        rset = db.executeQuery("SELECT * FROM professor WHERE email = "+ "'"+email+ "'" +" and "
+                    + "senha = "+"'"+senha+"'");
+        
+        try {            
+                if(rset.next()){                   
+                    p.setId(rset.getInt("id"));
+                    p.setNome(rset.getString("nome"));
+                    p.setFormacao(rset.getString("formacao"));
+                    p.setEmail(rset.getString("email")); 
+                    p.setSenha(rset.getString("senha"));
+                    p.setImagem(rset.getString("imagem")); 
+                } 
+                //professor.add(p);
             
-        try {
-            while (rset.next()) {
-                Professor p = new Professor();
-                p.setId(rset.getInt("id"));
-                p.setNome(rset.getString("nome"));
-                p.setEmail(rset.getString("email")); 
-                p.setSenha(rset.getString("senha"));
-                p.setImagem(rset.getString("imagem")); 
-                
-                professor.add(p);
-            }
         } catch (SQLException ex) {
             throw new Exception("Erro ao percorrer resultados!");
         }
             
         db.desconectar();
                 
-        return professor;
+        return p;
     }
+    
+    
 }

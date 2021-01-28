@@ -5,19 +5,92 @@
  */
 package View;
 
+import DAO.DBController;
+import Models.Aluno;
+import Models.Atividade;
+import Models.Materia;
+import Models.Professor;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
 /**
  *
  * @author lukra
  */
-public class Visualizar extends javax.swing.JFrame {
+public final class Visualizar extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Visualizar
-     */
-    public Visualizar() {
+    Professor prof ;
+    
+    List<Materia> mat;
+    int  matAtual = 0;
+    int idMateria = 1;
+    
+    public Visualizar(Professor prof) {
         initComponents();
-    }
+        //System.out.println(num);
+        carregaProfessor(prof);
+        this.prof = prof;
+        carregarMateria();
+    }   
 
+    Visualizar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }  
+        
+     public void carregaProfessor(Professor prof) {
+        try {            
+                ImageIcon img1 = new ImageIcon(prof.getImagem());            
+                img1.setImage(img1.getImage().getScaledInstance(
+                jlbImagemUsuário.getWidth(),
+                jlbImagemUsuário.getHeight(),
+                1
+                ));
+                jlbImagemUsuário.setIcon(img1);
+                jlNome.setText(prof.getNome());
+                jlFormacao.setText(prof.getFormacao());
+                jlEmail.setText( prof.getEmail());
+            }catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+                System.exit(-1);
+            }
+    }    
+    
+    public void carregarMateria() {
+        try {
+            mat = Materia.buscarMateria();
+            if (mat.size() > 0) {                                
+                jlMateriaNome.setText("Nome da matéria: " + mat.get(matAtual).getNome());
+                jlMateriaCodigo.setText("Dia da semana da aula: " + mat.get(matAtual).getHorario());
+                jlMateriaCargaHoraria.setText("Carga horária: " + mat.get(matAtual).getDuracao() + "h");
+                idMateria = mat.get(matAtual).getId();
+            }
+            if (matAtual == 0) {
+                jbBackMateria.setEnabled(false);
+            }
+            else {
+                jbBackMateria.setEnabled(true);
+            }
+
+            if (matAtual == mat.size() - 1) {
+                jbNextMateria.setEnabled(false);
+            }
+            else {
+                jbNextMateria.setEnabled(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            System.exit(-1);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,64 +100,68 @@ public class Visualizar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jButton10 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jlbImagemUsuário = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jlNome = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jlFormacao = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jlEmail = new javax.swing.JLabel();
+        jbnRelatorio = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jbNextMateria = new javax.swing.JButton();
+        jbBackMateria = new javax.swing.JButton();
+        jlMateriaNome = new javax.swing.JLabel();
+        jlMateriaCodigo = new javax.swing.JLabel();
+        jlMateriaCargaHoraria = new javax.swing.JLabel();
+        jbCMateria = new javax.swing.JButton();
+        JBNCadastrarAluno = new javax.swing.JButton();
+        jbCAtividade = new javax.swing.JButton();
+        bntSelecionarMateria = new javax.swing.JButton();
+
+        jButton10.setText("jButton10");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Main ");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Atividades"));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 391, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Usuário"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Professor"));
 
         jLabel1.setText("Nome");
 
-        jLabel2.setText("jLabel2");
-
-        jLabel3.setText("Código");
-
-        jLabel4.setText("jLabel4");
+        jLabel3.setText("Formação");
 
         jLabel5.setText("Email");
 
-        jLabel6.setText("jLabel6");
+        jbnRelatorio.setBackground(new java.awt.Color(153, 0, 153));
+        jbnRelatorio.setText("Relatório");
+        jbnRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnRelatorioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jlbImagemUsuário, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jlNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(1, 1, 1)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                    .addComponent(jlFormacao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addComponent(jlEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jbnRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,16 +170,108 @@ public class Visualizar extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jlNome, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jlFormacao, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 115, Short.MAX_VALUE))
+                .addComponent(jlEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbnRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Matérias"));
+
+        jbNextMateria.setBackground(new java.awt.Color(0, 0, 204));
+        jbNextMateria.setIcon(new javax.swing.ImageIcon("C:\\Users\\lukra\\Documents\\NetBeansProjects\\ProjetoProgramacao\\src\\main\\java\\Assets\\arrow_right.png")); // NOI18N
+        jbNextMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNextMateriaActionPerformed(evt);
+            }
+        });
+
+        jbBackMateria.setBackground(new java.awt.Color(0, 0, 204));
+        jbBackMateria.setIcon(new javax.swing.ImageIcon("C:\\Users\\lukra\\Documents\\NetBeansProjects\\ProjetoProgramacao\\src\\main\\java\\Assets\\arrow_left.png")); // NOI18N
+        jbBackMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBackMateriaActionPerformed(evt);
+            }
+        });
+
+        jbCMateria.setBackground(new java.awt.Color(0, 0, 255));
+        jbCMateria.setText("Cadastrar Matéria ");
+        jbCMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCMateriaActionPerformed(evt);
+            }
+        });
+
+        JBNCadastrarAluno.setBackground(new java.awt.Color(153, 255, 153));
+        JBNCadastrarAluno.setText("Cadastrar Aluno");
+        JBNCadastrarAluno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBNCadastrarAlunoActionPerformed(evt);
+            }
+        });
+
+        jbCAtividade.setBackground(new java.awt.Color(255, 255, 0));
+        jbCAtividade.setText("Cadastrar Atividade");
+        jbCAtividade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCAtividadeActionPerformed(evt);
+            }
+        });
+
+        bntSelecionarMateria.setBackground(new java.awt.Color(0, 255, 0));
+        bntSelecionarMateria.setText("Selecionar Matéria");
+        bntSelecionarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntSelecionarMateriaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlMateriaNome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jlMateriaCargaHoraria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jlMateriaCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(bntSelecionarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbCMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jbBackMateria)
+                        .addGap(7, 7, 7)
+                        .addComponent(jbNextMateria))
+                    .addComponent(jbCAtividade, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                    .addComponent(JBNCadastrarAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbNextMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbBackMateria, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlMateriaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlMateriaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlMateriaCargaHoraria, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jbCAtividade, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(JBNCadastrarAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbCMateria, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(bntSelecionarMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -110,18 +279,92 @@ public class Visualizar extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbCMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCMateriaActionPerformed
+        CadastrarMateria viewcadastrarMateria= new CadastrarMateria();
+        
+        viewcadastrarMateria.setVisible(true);
+        
+       // this.dispose();
+    }//GEN-LAST:event_jbCMateriaActionPerformed
+
+    private void jbCAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCAtividadeActionPerformed
+        CadastrarAtividade viewcadastrarAtividade= new CadastrarAtividade();
+        
+        viewcadastrarAtividade.setVisible(true);
+        
+        //this.dispose();
+    }//GEN-LAST:event_jbCAtividadeActionPerformed
+
+    private void JBNCadastrarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBNCadastrarAlunoActionPerformed
+        CadastrarAluno viewcadastrarAluno;
+        
+        try {
+            viewcadastrarAluno = new CadastrarAluno();
+            viewcadastrarAluno.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(Visualizar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        
+
+        
+
+        // this.dispose();
+    }//GEN-LAST:event_JBNCadastrarAlunoActionPerformed
+
+    private void jbNextMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNextMateriaActionPerformed
+        matAtual++;
+        carregarMateria();
+    }//GEN-LAST:event_jbNextMateriaActionPerformed
+
+    private void jbBackMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBackMateriaActionPerformed
+        matAtual--;
+        carregarMateria();
+    }//GEN-LAST:event_jbBackMateriaActionPerformed
+
+    private void bntSelecionarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSelecionarMateriaActionPerformed
+        
+        listar viewcadastrarAluno = new listar(this.prof, idMateria);
+
+        viewcadastrarAluno.setVisible(true);
+    }//GEN-LAST:event_bntSelecionarMateriaActionPerformed
+
+    private void jbnRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRelatorioActionPerformed
+        String arqRel = "C:/Users/lukra/JaspersoftWorkspace/MyReports/";
+        arqRel += "controleDeClasses.jasper";
+        try {
+            DBController db = new DBController();
+            JasperReport rel = (JasperReport) 
+                    JRLoader.loadObjectFromFile(arqRel);
+            
+            db.conectar();
+            JasperPrint imp = JasperFillManager.fillReport(rel, 
+                                                        null, db.getConexao());
+            db.desconectar();
+            
+            JasperViewer v = new JasperViewer(imp);
+            v.setTitle("Relatório de Cadastros de Classe");
+            v.setVisible(true);            
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_jbnRelatorioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,14 +402,25 @@ public class Visualizar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBNCadastrarAluno;
+    private javax.swing.JButton bntSelecionarMateria;
+    private javax.swing.JButton jButton10;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JButton jbBackMateria;
+    private javax.swing.JButton jbCAtividade;
+    private javax.swing.JButton jbCMateria;
+    private javax.swing.JButton jbNextMateria;
+    private javax.swing.JButton jbnRelatorio;
+    private javax.swing.JLabel jlEmail;
+    private javax.swing.JLabel jlFormacao;
+    private javax.swing.JLabel jlMateriaCargaHoraria;
+    private javax.swing.JLabel jlMateriaCodigo;
+    private javax.swing.JLabel jlMateriaNome;
+    private javax.swing.JLabel jlNome;
     private javax.swing.JLabel jlbImagemUsuário;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Models;
 
-import Controller.DBController;
+import DAO.DBController;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,18 +9,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author lukra
- */
 public class Atividade {
     private int id;
     private String descricao;
     private String date;
     private String titulo;
+    private String materia_id;
 
     public int getId() {
         return id;
+    }
+
+    public String getMateria_id() {
+        return materia_id;
+    }
+
+    public void setMateria_id(String materia_id) {
+        this.materia_id = materia_id;
     }
 
     public void setId(int id) {
@@ -58,27 +59,30 @@ public class Atividade {
     public Atividade() {
     }
     
-    public void adicionarUsuario() throws Exception {
+    public void adicionarAtividade() throws Exception {
         DBController db = new DBController();
         Map<String,String> dados = new HashMap<>();
         
-        dados.put("nome", this.titulo);
-        dados.put("codigo", this.descricao );
-        dados.put("email", this.date);
+        dados.put("titulo", this.titulo);
+        dados.put("date", this.date);
+        dados.put("descricao", this.descricao );
+        dados.put("materia_id", this.materia_id );
+        
                 
         db.conectar();
         db.insert("atividade", dados);
         db.desconectar();
     }
         
-    public void atualizarUsuario() throws Exception {
+    public void atualizarAtividade() throws Exception {
         DBController db = new DBController();
         Map<String,String> dados = new HashMap<>();
         Map<String,String> where = new HashMap<>();
         
-        dados.put("nome", this.titulo);
-        dados.put("codigo", this.descricao );
-        dados.put("email", this.date);
+        dados.put("titulo", this.titulo);
+        dados.put("date", this.date);
+        dados.put("descricao", this.descricao);
+        dados.put("materia_id", this.materia_id);        
         where.put("id", String.valueOf(getId()));
         
         db.conectar();
@@ -86,7 +90,7 @@ public class Atividade {
         db.desconectar();
     }
     
-     public static List<Atividade> buscaProdutos() throws Exception {
+     public static List<Atividade> buscarAtividade() throws Exception {
         DBController db = new DBController();
         ResultSet rset;
         List<Atividade> atividade = new ArrayList<>();
@@ -99,8 +103,39 @@ public class Atividade {
                 Atividade p = new Atividade();
                 p.setId(rset.getInt("id"));
                 p.setTitulo(rset.getString("titulo"));
+                p.setDate(rset.getString("date"));
                 p.setDescricao(rset.getString("descricao")); 
-                p.setDate(rset.getString("date"));                 
+                p.setMateria_id(rset.getString("materia_id"));
+                                
+                
+                atividade.add(p);
+            }
+        } catch (SQLException ex) {
+            throw new Exception("Erro ao percorrer resultados!");
+        }
+            
+        db.desconectar();
+                
+        return atividade;
+    }
+     
+     public static List<Atividade> buscarAtividade(int num) throws Exception {
+        DBController db = new DBController();
+        ResultSet rset;
+        List<Atividade> atividade = new ArrayList<>();
+                
+        db.conectar();
+        rset = db.executeQuery("SELECT * FROM atividade Where materia_id = " + num);
+            
+        try {
+            while (rset.next()) {
+                Atividade p = new Atividade();
+                p.setId(rset.getInt("id"));
+                p.setTitulo(rset.getString("titulo"));
+                p.setDate(rset.getString("date"));
+                p.setDescricao(rset.getString("descricao")); 
+                p.setMateria_id(rset.getString("materia_id"));
+                                
                 
                 atividade.add(p);
             }

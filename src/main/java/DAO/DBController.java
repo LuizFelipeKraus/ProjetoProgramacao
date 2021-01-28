@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,9 +17,9 @@ import java.util.Map;
  */
 
 public class DBController {
-    private final String DB_NAME = "SigaaFuncional";
+    private final String DB_NAME = "mydb";
     private final String DB_USER = "root";
-    private final String DB_PASSWORD = "";
+    private final String DB_PASSWORD = "Lukraus12";
     
     private Connection db = null;
     private boolean conectado = false;
@@ -31,17 +31,15 @@ public class DBController {
     }
     
     public void conectar() throws Exception {
-        String url = "jdbc:mysql://localhost/";
+        String url = "jdbc:mysql://localhost/";     
+        url += DB_NAME + "?serverTimezone=UTC";
         
-        url += DB_NAME + "?";
-        url += "user=" + DB_USER + "&";
-        url += "password=" + DB_PASSWORD;
         
         System.out.println("Conectando ao banco de dados...");
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");        
-            db = DriverManager.getConnection(url);
+            db = DriverManager.getConnection(url,DB_USER,DB_PASSWORD);
         } catch(ClassNotFoundException e) {
             throw new Exception("Erro ao carregar driver de conexão!");
         } catch (SQLException ex) {
@@ -72,7 +70,7 @@ public class DBController {
             ResultSet rset = stmt.executeQuery(query);
             return rset;
         } catch (SQLException ex) {
-            throw new Exception("Erro ao executar Consulta!");
+            throw new Exception("Erro ao executar Consulta!" + ex);
         }
     }
     
@@ -165,7 +163,7 @@ public class DBController {
             stmt = db.createStatement();
             stmt.executeUpdate(del);
         } catch (SQLException e) {
-            throw new Exception("Erro ao executar Delete!");
+            throw new Exception("Erro ao executar Delete!" + e);
         }
     }    
 }

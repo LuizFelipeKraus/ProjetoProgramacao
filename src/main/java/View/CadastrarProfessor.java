@@ -5,6 +5,12 @@
  */
 package View;
 
+import Models.Professor;
+import java.io.File;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,14 +18,17 @@ import javax.swing.JOptionPane;
  * @author lukra
  */
 public class CadastrarProfessor extends javax.swing.JFrame {
-    
+    List<Professor> mdProf;
+    int professorAtual = 0;
+    boolean atualizando = true;
     /**
      * Creates new form CadastrarProfessor
      */
+ 
     public CadastrarProfessor() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,20 +53,23 @@ public class CadastrarProfessor extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jbBusca = new javax.swing.JButton();
         jtSelecionarImagem = new javax.swing.JTextField();
+        jFileChooser1 = new javax.swing.JFileChooser();
+        jFileChooser2 = new javax.swing.JFileChooser();
+        jFileChooser3 = new javax.swing.JFileChooser();
         jPanel3 = new javax.swing.JPanel();
-        jbFecharProfessor = new javax.swing.JButton();
-        jLCodigoProfessor = new javax.swing.JLabel();
-        jtCodigoProfessor = new javax.swing.JTextField();
+        jLFormacaoProfessor = new javax.swing.JLabel();
+        jtFormacaoProfessor = new javax.swing.JTextField();
         lbCadastroNomeProfessor = new javax.swing.JLabel();
         jtfCadastroNomeProfessor = new javax.swing.JTextField();
         lbCadastroEmailProfessor = new javax.swing.JLabel();
         jtfCadastroEmailProfessor = new javax.swing.JTextField();
         lbCadastroSenhaProfessor = new javax.swing.JLabel();
-        jtfCadastroSenhaProfessor = new javax.swing.JTextField();
         jlImagemProfessor = new javax.swing.JLabel();
         jbBuscaImagem = new javax.swing.JButton();
         jtSelecionarImagemProfessor = new javax.swing.JTextField();
         jbCadastrarProfessor = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jtfCadastroSenhaProfessor = new javax.swing.JPasswordField();
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -159,19 +171,12 @@ public class CadastrarProfessor extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastrar Professor");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro Professor"));
 
-        jbFecharProfessor.setBackground(new java.awt.Color(204, 0, 0));
-        jbFecharProfessor.setText("Fechar");
-        jbFecharProfessor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbFecharProfessorActionPerformed(evt);
-            }
-        });
-
-        jLCodigoProfessor.setText("Codigo");
+        jLFormacaoProfessor.setText("Formação");
 
         lbCadastroNomeProfessor.setText("Nome");
 
@@ -182,11 +187,29 @@ public class CadastrarProfessor extends javax.swing.JFrame {
         jlImagemProfessor.setText("Imagem");
 
         jbBuscaImagem.setText("Selecionar");
+        jbBuscaImagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscaImagemActionPerformed(evt);
+            }
+        });
 
         jtSelecionarImagemProfessor.setEditable(false);
 
         jbCadastrarProfessor.setBackground(new java.awt.Color(51, 255, 0));
         jbCadastrarProfessor.setText("Cadastrar");
+        jbCadastrarProfessor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCadastrarProfessorActionPerformed(evt);
+            }
+        });
+
+        jButton1.setBackground(new java.awt.Color(204, 0, 0));
+        jButton1.setText("Fechar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -194,39 +217,40 @@ public class CadastrarProfessor extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jbBuscaImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtSelecionarImagemProfessor))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jbCadastrarProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbFecharProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jtfCadastroSenhaProfessor, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lbCadastroSenhaProfessor)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jtfCadastroEmailProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                            .addComponent(jtfCadastroNomeProfessor)
-                            .addComponent(lbCadastroNomeProfessor, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbCadastroEmailProfessor, javax.swing.GroupLayout.Alignment.LEADING)))
-                    .addComponent(jlImagemProfessor)
-                    .addComponent(jLCodigoProfessor)
-                    .addComponent(jtCodigoProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jtfCadastroSenhaProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lbCadastroNomeProfessor)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jbBuscaImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jtSelecionarImagemProfessor))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                            .addComponent(jbCadastrarProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbCadastroSenhaProfessor)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jtfCadastroEmailProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                                .addComponent(jtfCadastroNomeProfessor)
+                                .addComponent(lbCadastroEmailProfessor, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addComponent(jlImagemProfessor)
+                        .addComponent(jLFormacaoProfessor)
+                        .addComponent(jtFormacaoProfessor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(lbCadastroNomeProfessor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtfCadastroNomeProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLCodigoProfessor)
+                .addComponent(jLFormacaoProfessor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtCodigoProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtFormacaoProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbCadastroEmailProfessor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -243,9 +267,8 @@ public class CadastrarProfessor extends javax.swing.JFrame {
                     .addComponent(jtSelecionarImagemProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jbFecharProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                    .addComponent(jbCadastrarProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jbCadastrarProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -256,27 +279,91 @@ public class CadastrarProfessor extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
        
     }//GEN-LAST:event_jbFecharActionPerformed
 
-    private void jbFecharProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharProfessorActionPerformed
-         int cadastrarUsuario = JOptionPane.showConfirmDialog               
-        (null, "Você tem certeza que não quer Salvar"
-            + " o usuário?");
-         System.out.println(cadastrarUsuario);
-         if(cadastrarUsuario == 0) {
-            this.dispose();
-            Main abrirMain = new Main();
-            abrirMain.setVisible(true);
-         }else {}
-    }//GEN-LAST:event_jbFecharProfessorActionPerformed
+    private void jbBuscaImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscaImagemActionPerformed
+        int ret = jFileChooser3.showOpenDialog(this);
+        if (ret == JFileChooser.APPROVE_OPTION) {
+            File img = jFileChooser3.getSelectedFile();
+            jtSelecionarImagemProfessor.setText(img.getAbsolutePath());
+        }
+    }//GEN-LAST:event_jbBuscaImagemActionPerformed
+
+    private void jbCadastrarProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarProfessorActionPerformed
+        String nome = jtfCadastroNomeProfessor.getText();
+        String formacao = jtFormacaoProfessor.getText();
+        String email = jtfCadastroEmailProfessor.getText();
+        String senha = jtfCadastroSenhaProfessor.getText();
+        
+        String img = jtSelecionarImagemProfessor.getText();
+        String res = img.replaceAll("\\\\","/");
+        
+        if (nome.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Você deve informar o Nome!");
+            return;
+        }
+        
+        if (formacao.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Você deve informar a Formação!");
+            return;
+        }
+        
+        if (email.equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar um Email!");
+            return;
+        }
+        
+        if (senha.equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar uma Senha!");
+            return;
+        }
+        
+        if (img.equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar uma Imagem!");
+            return;
+        }
+        
+        Professor p = new Professor();
+                
+        try {
+            if(p.login(email, senha)){
+                JOptionPane.showMessageDialog(this, "Email ou senha já cadastrado!");
+                jtfCadastroNomeProfessor.setText("");
+                jtFormacaoProfessor.setText("");
+                jtfCadastroEmailProfessor.setText("");
+                jtfCadastroSenhaProfessor.setText("");
+            }else {
+                p.setEmail(email); 
+                p.setSenha(senha);
+                p.setFormacao(formacao);                
+                p.setImagem(res);
+                p.setNome(nome);
+                p.adicionarProfessor();
+                JOptionPane.showMessageDialog(this, "Professor salvo com sucesso!");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CadastrarProfessor.class.getName()).log(Level.SEVERE, null, ex);
+        }                
+         
+        
+        
+    }//GEN-LAST:event_jbCadastrarProfessorActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JOptionPane.showMessageDialog(this, "Fechando o cadastro");
+        Main telaLogin = new Main();
+        telaLogin.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,8 +401,12 @@ public class CadastrarProfessor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFileChooser jFileChooser2;
+    private javax.swing.JFileChooser jFileChooser3;
     private javax.swing.JFrame jFrame1;
-    private javax.swing.JLabel jLCodigoProfessor;
+    private javax.swing.JLabel jLFormacaoProfessor;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -326,9 +417,8 @@ public class CadastrarProfessor extends javax.swing.JFrame {
     private javax.swing.JButton jbCadastrar;
     private javax.swing.JButton jbCadastrarProfessor;
     private javax.swing.JButton jbFechar;
-    private javax.swing.JButton jbFecharProfessor;
     private javax.swing.JLabel jlImagemProfessor;
-    private javax.swing.JTextField jtCodigoProfessor;
+    private javax.swing.JTextField jtFormacaoProfessor;
     private javax.swing.JTextField jtSelecionarImagem;
     private javax.swing.JTextField jtSelecionarImagemProfessor;
     private javax.swing.JTextField jtfCadastroEmailAluno;
@@ -336,7 +426,7 @@ public class CadastrarProfessor extends javax.swing.JFrame {
     private javax.swing.JTextField jtfCadastroNomeAluno;
     private javax.swing.JTextField jtfCadastroNomeProfessor;
     private javax.swing.JTextField jtfCadastroSenhaAluno;
-    private javax.swing.JTextField jtfCadastroSenhaProfessor;
+    private javax.swing.JPasswordField jtfCadastroSenhaProfessor;
     private javax.swing.JLabel lbCadastroEmail;
     private javax.swing.JLabel lbCadastroEmailProfessor;
     private javax.swing.JLabel lbCadastroNomeAluno;

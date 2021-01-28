@@ -5,6 +5,12 @@
  */
 package View;
 
+import Models.Professor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+
 /**
  *
  * @author lukra
@@ -28,7 +34,7 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jtfEmail = new javax.swing.JTextField();
-        jpfSenha = new javax.swing.JPasswordField();
+        jtfSenha = new javax.swing.JPasswordField();
         jbLogar = new javax.swing.JButton();
         jbCadastrar = new javax.swing.JButton();
         fotoLogin = new javax.swing.JLabel();
@@ -37,18 +43,24 @@ public class Main extends javax.swing.JFrame {
         jbCadastrarProfessor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login Professor");
 
-        jpfSenha.addActionListener(new java.awt.event.ActionListener() {
+        jtfSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jpfSenhaActionPerformed(evt);
+                jtfSenhaActionPerformed(evt);
             }
         });
 
         jbLogar.setBackground(new java.awt.Color(0, 0, 204));
         jbLogar.setText("Logar");
+        jbLogar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLogarActionPerformed(evt);
+            }
+        });
 
         jbCadastrar.setBackground(new java.awt.Color(0, 0, 255));
-        jbCadastrar.setText("Cadastrar Aluno");
+        jbCadastrar.setText("Sair");
         jbCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbCadastrarActionPerformed(evt);
@@ -76,25 +88,23 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jbLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jbCadastrarProfessor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfEmail)
+                    .addComponent(jtfSenha, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlbSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlbSenha)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlb_email, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(172, 172, 172)
+                                .addComponent(jlb_email)
+                                .addGap(169, 169, 169)
                                 .addComponent(fotoLogin)))
-                        .addContainerGap(284, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jtfEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jpfSenha, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jbLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(63, 63, 63)
-                                .addComponent(jbCadastrarProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(19, 19, 19))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,37 +118,53 @@ public class Main extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(jlbSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jpfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbCadastrarProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                    .addComponent(jbCadastrarProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jpfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpfSenhaActionPerformed
+    private void jtfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfSenhaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jpfSenhaActionPerformed
+    }//GEN-LAST:event_jtfSenhaActionPerformed
 
     private void jbCadastrarProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarProfessorActionPerformed
-        CadastrarProfessor cadastrarProfessor = new CadastrarProfessor();
+        CadastrarProfessor viewcadastrarProfessor = new CadastrarProfessor();
         
-        cadastrarProfessor.setVisible(true);
+        viewcadastrarProfessor.setVisible(true);
         
         this.dispose();
     }//GEN-LAST:event_jbCadastrarProfessorActionPerformed
 
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
-        CadastrarAluno cadastrarAluno = new CadastrarAluno();
-        
-        cadastrarAluno.setVisible(true);
-        
-        this.dispose();
+        System.exit(1);
     }//GEN-LAST:event_jbCadastrarActionPerformed
+
+    private void jbLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLogarActionPerformed
+        Professor cadastro = new Professor();
+        try {
+            if(cadastro.login(jtfEmail.getText(), jtfSenha.getText())) {
+                             
+                Visualizar viewVisualizar = new Visualizar(Professor.
+                        buscaProfessor(jtfEmail.getText(), jtfSenha.getText()));
+                viewVisualizar.setVisible(true);
+                this.dispose();
+            }else {
+                JOptionPane.showMessageDialog(this, "Senha ou Email não cadastrado");
+            }
+        
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jbLogarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,12 +176,8 @@ public class Main extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            javax.swing.UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -182,7 +204,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jbLogar;
     private javax.swing.JLabel jlbSenha;
     private javax.swing.JLabel jlb_email;
-    private javax.swing.JPasswordField jpfSenha;
     private javax.swing.JTextField jtfEmail;
+    private javax.swing.JPasswordField jtfSenha;
     // End of variables declaration//GEN-END:variables
 }
