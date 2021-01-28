@@ -11,7 +11,17 @@ import java.util.Map;
 
 
 public class Aluno extends Pessoa {     
+    private String Materia;
 
+    public String getMateria() {
+        return Materia;
+    }
+
+    public void setMateria(String Materia) {
+        this.Materia = Materia;
+    }
+    
+    
     public void adicionarAluno() throws Exception {
         DBController db = new DBController();
         Map<String,String> dados = new HashMap<>();
@@ -54,7 +64,8 @@ public class Aluno extends Pessoa {
                 a.setId(rset.getInt("id"));
                 a.setNome(rset.getString("nome"));                
                 a.setEmail(rset.getString("email"));                 
-                a.setImagem(rset.getString("imagem")); 
+                a.setImagem(rset.getString("imagem"));
+                
                 
                 aluno.add(a);
             }
@@ -65,6 +76,38 @@ public class Aluno extends Pessoa {
         db.desconectar();
                 
         return aluno;
-    }    
+    }  
+     public static List<Aluno> buscarAlunoDeUmaMateria(int num) throws Exception {
+        DBController db = new DBController();
+        ResultSet rset;
+        List<Aluno> aluno = new ArrayList<>();
+                
+        db.conectar();
+        rset = db.executeQuery("Select \n" +
+            "al.id, al.nome, al.email , al.imagem, m.nome materia,m.id \n" +
+            "from materia m\n" +
+            "join materia_has_aluno ma on ma.materia_id = m.id\n" +
+            "join aluno al on ma.aluno_id = al.id\n" +
+            "where m.id = " +  num );
+            
+        try {
+            while (rset.next()) {
+                Aluno a = new Aluno();
+                a.setId(rset.getInt("id"));
+                a.setNome(rset.getString("nome"));                
+                a.setEmail(rset.getString("email"));                 
+                a.setImagem(rset.getString("imagem"));
+                a.setMateria(rset.getString("materia"));
+                //, m.nome materia 
+                aluno.add(a);
+            }
+        } catch (SQLException ex) {
+            throw new Exception("Erro ao percorrer resultados!");
+        }
+            
+        db.desconectar();
+                
+        return aluno;
+    }
     
 }

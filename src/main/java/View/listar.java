@@ -5,6 +5,7 @@
  */
 package View;
 
+import Models.Aluno;
 import Models.Atividade;
 import Models.Materia;
 import Models.Professor;
@@ -19,7 +20,9 @@ import javax.swing.JOptionPane;
 public class listar extends javax.swing.JFrame {
     int numId;
     List<Atividade> atv;
+    List<Aluno> alun;
     int atvList = 0;
+    int aluList = 0;
     /**
      * Creates new form listar
      */
@@ -28,6 +31,8 @@ public class listar extends javax.swing.JFrame {
         carregaProfessor(prof);
         numId = num;
         carregarAtividade();
+        
+        carregarAlunos();
         
     }
 
@@ -51,6 +56,42 @@ public class listar extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, e.getMessage());
                 System.exit(-1);
             }
+    }
+    
+    public void carregarAlunos() {
+        try {
+            alun = Aluno.buscarAlunoDeUmaMateria(numId);
+            if (atv.size() > 0) {
+                System.out.println(numId);
+                ImageIcon img1 = new ImageIcon(alun.get(aluList).getImagem());            
+                img1.setImage(img1.getImage().getScaledInstance(
+                lbImagem.getWidth(),
+                lbImagem.getHeight(),
+                1
+                ));
+                lbImagem.setIcon(img1);
+                jlNomeAl.setText("Nome do Aluno: " + alun.get(aluList).getNome());
+                jlEmailal.setText("Email do Aluno: " + alun.get(aluList).getEmail());
+                jlMateria.setText("Matéria: " + alun.get(aluList).getMateria());
+                
+            }
+            if (aluList == 0) {
+                jbbackAluno.setEnabled(false);
+            }
+            else {
+                jbbackAluno.setEnabled(true);
+            }
+
+            if (aluList == alun.size() - 1) {
+                jbnextAluno.setEnabled(false);
+            }
+            else {
+                jbnextAluno.setEnabled(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            System.exit(-1);
+        }
     }
     
     public void carregarAtividade() {
@@ -98,6 +139,12 @@ public class listar extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jlEmail = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jbnextAluno = new javax.swing.JButton();
+        jbbackAluno = new javax.swing.JButton();
+        lbImagem = new javax.swing.JLabel();
+        jlNomeAl = new javax.swing.JLabel();
+        jlEmailal = new javax.swing.JLabel();
+        jlMateria = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jbBackAtividade = new javax.swing.JButton();
         jbNextAtividade = new javax.swing.JButton();
@@ -168,15 +215,51 @@ public class listar extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Alunos"));
 
+        jbnextAluno.setIcon(new javax.swing.ImageIcon("C:\\Users\\lukra\\Documents\\NetBeansProjects\\ProjetoProgramacao\\src\\main\\java\\Assets\\arrow_right.png")); // NOI18N
+        jbnextAluno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnextAlunoActionPerformed(evt);
+            }
+        });
+
+        jbbackAluno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arrow_left.png"))); // NOI18N
+        jbbackAluno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbbackAlunoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(lbImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbbackAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(jbnextAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jlEmailal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jlNomeAl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 153, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlNomeAl, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jlEmailal, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jlMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbnextAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbbackAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(lbImagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Atividades"));
@@ -210,10 +293,10 @@ public class listar extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlAtividadeDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jlAtividadeDate, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jbBackAtividade)
+                        .addComponent(jbBackAtividade, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(jbNextAtividade))))
             .addComponent(jlAtividadeNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -226,10 +309,10 @@ public class listar extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jlAtividadeDate, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbBackAtividade, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbNextAtividade, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jbBackAtividade, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                            .addComponent(jbNextAtividade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane1)))
         );
 
@@ -266,6 +349,16 @@ public class listar extends javax.swing.JFrame {
         atvList--;
         carregarAtividade();
     }//GEN-LAST:event_jbBackAtividadeActionPerformed
+
+    private void jbnextAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnextAlunoActionPerformed
+         aluList++;
+        carregarAlunos();
+    }//GEN-LAST:event_jbnextAlunoActionPerformed
+
+    private void jbbackAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbbackAlunoActionPerformed
+        aluList--;
+        carregarAlunos();
+    }//GEN-LAST:event_jbbackAlunoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -312,12 +405,18 @@ public class listar extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbBackAtividade;
     private javax.swing.JButton jbNextAtividade;
+    private javax.swing.JButton jbbackAluno;
+    private javax.swing.JButton jbnextAluno;
     private javax.swing.JLabel jlAtividadeDate;
     private javax.swing.JTextPane jlAtividadeDesc;
     private javax.swing.JLabel jlAtividadeNome;
     private javax.swing.JLabel jlEmail;
+    private javax.swing.JLabel jlEmailal;
     private javax.swing.JLabel jlFormacao;
+    private javax.swing.JLabel jlMateria;
     private javax.swing.JLabel jlNome;
+    private javax.swing.JLabel jlNomeAl;
     private javax.swing.JLabel jlbImagemUsuário;
+    private javax.swing.JLabel lbImagem;
     // End of variables declaration//GEN-END:variables
 }

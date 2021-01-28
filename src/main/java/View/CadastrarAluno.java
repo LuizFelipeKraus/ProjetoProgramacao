@@ -24,7 +24,7 @@ import javax.swing.table.TableRowSorter;
  */
 public class CadastrarAluno extends javax.swing.JFrame {
     List<Aluno> alun;
-    int prodAtual = 0;
+    int aluAtual = 0;
     boolean atualizando = true;
     List<Materia> mat;
     
@@ -55,19 +55,19 @@ public class CadastrarAluno extends javax.swing.JFrame {
         jtCodigo.setEnabled(false);
         
         if (alun.size() > 0) {
-            jtCodigo.setText(String.valueOf(alun.get(prodAtual).getId()));
-            jtNomeAluno.setText(alun.get(prodAtual).getNome());
-            jtEmailAluno.setText(String.valueOf(alun.get(prodAtual).getEmail()));
-            jtImagemAluno.setText(alun.get(prodAtual).getImagem());
-            idAlun = alun.get(prodAtual).getId();
-            if (prodAtual == 0) {
+            jtCodigo.setText(String.valueOf(alun.get(aluAtual).getId()));
+            jtNomeAluno.setText(alun.get(aluAtual).getNome());
+            jtEmailAluno.setText(String.valueOf(alun.get(aluAtual).getEmail()));
+            jtImagemAluno.setText(alun.get(aluAtual).getImagem());
+            idAlun = alun.get(aluAtual).getId();
+            if (aluAtual == 0) {
                 jbAnterior.setEnabled(false);
             }
             else {
                 jbAnterior.setEnabled(true);
             }
 
-            if (prodAtual == alun.size() - 1) {
+            if (aluAtual == alun.size() - 1) {
                 jbProximo.setEnabled(false);
             }
             else {
@@ -395,13 +395,23 @@ public class CadastrarAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_jbCadastrarAlunoActionPerformed
 
     private void jbAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnteriorActionPerformed
-       prodAtual--;
+       aluAtual--;
        preencheCampos();
+        try {
+            listarDadosMateria();
+        } catch (Exception ex) {
+            Logger.getLogger(CadastrarAluno.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbAnteriorActionPerformed
 
     private void jbProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbProximoActionPerformed
-       prodAtual++;
+       aluAtual++;
        preencheCampos();
+        try {
+            listarDadosMateria();
+        } catch (Exception ex) {
+            Logger.getLogger(CadastrarAluno.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbProximoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -409,6 +419,7 @@ public class CadastrarAluno extends javax.swing.JFrame {
         jtEmailAluno.setText("");      
         jtImagemAluno.setText("");
         jtCodigo.setText("auto");
+        atualizando  = false;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
