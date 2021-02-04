@@ -13,6 +13,7 @@ import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -91,23 +92,13 @@ public class CadastrarAluno extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tbDados.getModel();
        
         model.setNumRows(0);
-        for(Materia m : mat){
-            
+        mat.forEach((m) -> {
             model.addRow(new Object[]{               
                 false,
                 m.getId(),
                 m.getNome()            
             });
-            //System.out.println();
-            //if( == true){
-              //  a = m.getId();
-               // b = 1;
-               // mha.setIdAluno(b);
-                //mha.setIdMateria(a);
-               // mha.adicionarMateriaHasAluno();
-            //}
-            //funfa = false;
-        }
+        });
         
     }
     
@@ -362,10 +353,8 @@ public class CadastrarAluno extends javax.swing.JFrame {
                     materiaHasAluno mha = new materiaHasAluno();
                     String a = "" + tbDados.getModel().getValueAt(linha, 1);                
                     mha.setIdAluno("" + idAlun);  
-                    mha.setIdMateria(a);
-                                      
+                    mha.setIdMateria(a);                                      
                     mha.adicionarMateriaHasAluno();
-
                 }
             
             } catch (Exception ex) {

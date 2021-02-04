@@ -36,7 +36,6 @@ public final class Visualizar extends javax.swing.JFrame {
     
     public Visualizar(Professor prof) {
         initComponents();
-        //System.out.println(num);
         carregaProfessor(prof);
         this.prof = prof;
         carregarMateria();
@@ -319,11 +318,6 @@ public final class Visualizar extends javax.swing.JFrame {
             Logger.getLogger(Visualizar.class.getName()).log(Level.SEVERE, null, ex);
         }
        
-        
-
-        
-
-        // this.dispose();
     }//GEN-LAST:event_JBNCadastrarAlunoActionPerformed
 
     private void jbNextMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNextMateriaActionPerformed
@@ -345,7 +339,7 @@ public final class Visualizar extends javax.swing.JFrame {
 
     private void jbnRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRelatorioActionPerformed
         String arqRel = "C:/Users/lukra/JaspersoftWorkspace/MyReports/";
-        arqRel += "controleDeClasses.jasper";
+        arqRel += "relatorioControle.jasper";
         try {
             DBController db = new DBController();
             JasperReport rel = (JasperReport) 

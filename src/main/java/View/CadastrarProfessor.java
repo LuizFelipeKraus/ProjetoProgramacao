@@ -19,8 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class CadastrarProfessor extends javax.swing.JFrame {
     List<Professor> mdProf;
-    int professorAtual = 0;
-    boolean atualizando = true;
+    
     /**
      * Creates new form CadastrarProfessor
      */

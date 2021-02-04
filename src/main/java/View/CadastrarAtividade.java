@@ -7,12 +7,9 @@ package View;
 
 import Models.Atividade;
 import Models.Materia;
-import com.lowagie.text.pdf.AcroFields.Item;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.ComboBox;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -257,9 +254,7 @@ public final class CadastrarAtividade extends javax.swing.JFrame {
     private void jbCadastrarAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarAtividadeActionPerformed
         String titulo = jtAtividadeTitulo.getText();
         String data = jtAtividadeData.getText();
-        String descricao = jtAtividaDescricao.getText();
-        int x = cbMateria.getSelectedIndex();
-        //String petName = (String)a.getSelectedItem();
+        String descricao = jtAtividaDescricao.getText();        
         Materia item = (Materia)cbMateria.getSelectedItem();
         
         if (titulo.length() == 0) {
@@ -282,7 +277,7 @@ public final class CadastrarAtividade extends javax.swing.JFrame {
         p.setTitulo(titulo);
         p.setDate(data);
         p.setDescricao(descricao);
-        p.setMateria_id("" + item.getId());
+        p.setMateria_id(item.getId());
         try {
             if (atualizando) {
                 p.atualizarAtividade();
@@ -319,17 +314,13 @@ public final class CadastrarAtividade extends javax.swing.JFrame {
     }//GEN-LAST:event_jbNovoActionPerformed
 
     private void cbMateriaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbMateriaAncestorAdded
-        Materia mat = new Materia();
         try {
             List<Materia> lisMat = Materia.buscarMateria();
-            cbMateria.removeAll();
+            cbMateria.removeAll();                
             
-            //System.out.println(mat.getId());
-            for(Materia f : lisMat){              
-                
+            lisMat.forEach((f) -> {
                 cbMateria.addItem(f);
-                
-            }
+            });
             
         } catch (Exception ex) {
             Logger.getLogger(CadastrarAtividade.class.getName()).log(Level.SEVERE, null, ex);

@@ -14,17 +14,17 @@ public class Atividade {
     private String descricao;
     private String date;
     private String titulo;
-    private String materia_id;
+    private int materia_id;
 
     public int getId() {
         return id;
     }
 
-    public String getMateria_id() {
+    public int getMateria_id() {
         return materia_id;
     }
 
-    public void setMateria_id(String materia_id) {
+    public void setMateria_id(int materia_id) {
         this.materia_id = materia_id;
     }
 
@@ -63,10 +63,10 @@ public class Atividade {
         DBController db = new DBController();
         Map<String,String> dados = new HashMap<>();
         
-        dados.put("titulo", this.titulo);
-        dados.put("date", this.date);
-        dados.put("descricao", this.descricao );
-        dados.put("materia_id", this.materia_id );
+        dados.put("titulo", getTitulo());
+        dados.put("date", getDate());
+        dados.put("descricao", getDescricao());
+        dados.put("materia_id", String.valueOf(getMateria_id()) );
         
                 
         db.conectar();
@@ -82,7 +82,7 @@ public class Atividade {
         dados.put("titulo", this.titulo);
         dados.put("date", this.date);
         dados.put("descricao", this.descricao);
-        dados.put("materia_id", this.materia_id);        
+        dados.put("materia_id",  String.valueOf(getMateria_id()));        
         where.put("id", String.valueOf(getId()));
         
         db.conectar();
@@ -105,7 +105,7 @@ public class Atividade {
                 p.setTitulo(rset.getString("titulo"));
                 p.setDate(rset.getString("date"));
                 p.setDescricao(rset.getString("descricao")); 
-                p.setMateria_id(rset.getString("materia_id"));
+                p.setMateria_id(rset.getInt("materia_id"));
                                 
                 
                 atividade.add(p);
@@ -134,7 +134,7 @@ public class Atividade {
                 p.setTitulo(rset.getString("titulo"));
                 p.setDate(rset.getString("date"));
                 p.setDescricao(rset.getString("descricao")); 
-                p.setMateria_id(rset.getString("materia_id"));
+                p.setMateria_id(rset.getInt("materia_id"));
                                 
                 
                 atividade.add(p);
